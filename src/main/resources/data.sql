@@ -1,12 +1,7 @@
-DROP TABLE IF EXISTS greeting;
+DROP TABLE IF EXISTS GREETING;
 
-CREATE TABLE greeting
+CREATE TABLE GREETING
 (
-    id       INT AUTO_INCREMENT PRIMARY KEY,
-    greeting VARCHAR(250) NOT NULL
+    ID       INT PRIMARY KEY,
+    VALUE VARCHAR(250) NOT NULL
 );
-
-INSERT INTO greeting (greeting)
-VALUES ('Hello'),
-       ('Bonza'),
-       ('Jolly Good');

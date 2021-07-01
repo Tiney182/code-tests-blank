@@ -1,15 +1,19 @@
 package com.interview.code.controller;
 
+import com.interview.code.domain.Greeting;
+import com.interview.code.service.GreetingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class InterviewController {
 
-    @GetMapping(path = "/get/{name}")
-    public ResponseEntity<String> getInterview(@PathVariable String name) {
-        return ResponseEntity.ok("Hello " + name);
+    @Autowired
+    private GreetingService greetingService;
+
+    @GetMapping(path = "/get/{id}")
+    public ResponseEntity<?> getInterview(@PathVariable Integer id) {
+        return greetingService.getGreetingById(id);
     }
 }
