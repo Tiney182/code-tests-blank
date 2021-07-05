@@ -1,27 +1,29 @@
 package com.interview.code.controller;
 
-import com.interview.code.domain.Greeting;
 import com.interview.code.domain.GreetingRepository;
-import com.interview.code.domain.GreetingResponse;
-import org.hamcrest.MatcherAssert;
+import com.interview.code.service.ResultsSolver;
+import com.interview.code.service.StringSolver;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.hamcrest.HamcrestArgumentMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
-import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class InterviewControllerTest {
 
     @Autowired
     InterviewController interviewController;
+
+    @Autowired
+    StringSolver stringSolver;
+
+    @Autowired
+    ResultsSolver resultsSolver;
 
     @LocalServerPort
     private int port;
@@ -60,5 +62,51 @@ class InterviewControllerTest {
 //                "http://localhost:" + port + "/get/{id}", ResponseEntity.class, 1);
 //        Assert.isTrue(response.equals("{\"value\":\"Hello\"}"), "Hello not found when calling controller with id 1");
         Assert.isTrue(true, "I need to fix this test");
+    }
+
+
+    @Test
+    public void test_aabbb_returnsTrue() {
+        Assert.isTrue(stringSolver.checkString("aabbb"), "Value should be true");
+    }
+
+    @Test
+    public void test_ba_returnsFalse() {
+        Assert.isTrue(!stringSolver.checkString("ba"), "Value should be false");
+    }
+
+    @Test
+    public void test_aaa_returnsTrue() {
+        Assert.isTrue(stringSolver.checkString("aaa"), "Value should be true");
+    }
+
+    @Test
+    public void test_b_returnsTrue() {
+        Assert.isTrue(stringSolver.checkString("b"), "Value should be true");
+    }
+
+    @Test
+    public void test_abba_returnsFalse() {
+        Assert.isTrue(!stringSolver.checkString("abba"), "Value should be true");
+    }
+
+
+    @Test
+    public void resultsSolver() {
+        List<String> inputStrings = new ArrayList<>();
+        inputStrings.add("test1a");
+        inputStrings.add("test2");
+        inputStrings.add("test1b");
+        inputStrings.add("test1c");
+        inputStrings.add("test3");
+
+        List<String> results = new ArrayList<>();
+        results.add("Wrong answer");
+        results.add("OK");
+        results.add("OK");
+        results.add("Wrong answer");
+        results.add("OK");
+
+        Assert.isTrue(resultsSolver.solution(inputStrings.toArray(String[]::new), results.toArray(String[]::new)) == 33, "Result should equal 33");
     }
 }
