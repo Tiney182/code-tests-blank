@@ -10,15 +10,15 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class CodeApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CodeApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CodeApplication.class, args);
+    }
 
-	@Bean
-	public OpenAPI springShopOpenAPI() {
-		return new OpenAPI().info(new Info().title("Interview API")
-			.description("Interview").version("v1.0.0").license(null)
-			.contact(new Contact().name("Andrew Martyn Brightman").url("https://github.com/Tiney182")
-				.email("veloen2@googlemail.com")));
-	}
+    @Bean
+    public OpenAPI springShopOpenAPI() {
+        return new OpenAPI().info(new Info().title("Synalogik API")
+                .description("Synalogik Technical Test").version("v1.0.0").license(null)
+                .contact(new Contact().name("Andrew Martyn Brightman").url("https://github.com/Tiney182")
+                        .email("veloen2@googlemail.com")));
+    }
 }
