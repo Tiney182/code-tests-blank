@@ -2,6 +2,7 @@ package com.interview.code.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
@@ -25,6 +26,10 @@ public class StringAnalyser {
     }
 
     public String[] regexForSingleLineSplit(String lineOfFile) {
+        Pattern nonEOLFullstops = Pattern.compile("\\.(?! )");
+        lineOfFile = lineOfFile.replaceAll(nonEOLFullstops.pattern(), "");
+        Pattern nonEOLCommas = Pattern.compile(",(?! )");
+        lineOfFile = lineOfFile.replaceAll(nonEOLCommas.pattern(), "");
         Pattern pattern = Pattern.compile("[^A-Za-z0-9/&]");
         return lineOfFile.split(pattern.pattern());
     }

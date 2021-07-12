@@ -42,6 +42,7 @@ class SynalogikServiceTest {
         assert hashMap.get(7) == 3;
         assert hashMap.get(10) == 2;
         assert synalogikResponse.getWordCount() == 18;
+        assert synalogikResponse.getAverageWordLength().equals(BigDecimal.valueOf(4.667));
     }
 
     @Test
@@ -60,6 +61,12 @@ class SynalogikServiceTest {
         assert synalogikResponse.getAverageWordLength().equals(BigDecimal.valueOf(4.556));
     }
 
+    /**
+     * I added this more out of curiosity than anything.
+     * https://stackoverflow.com/questions/19486077/java-fastest-way-to-read-through-text-file-with-2-million-lines
+     * Was checking read efficiency of readline from bufferedReader compared to read all lines which in my opinion is
+     * more usable. as it gives you something to iterate over without a needless for each.
+     */
     @Test
     public void getResponseForResource_BiblePassed_CheckHowLongMethodTakesToRun() throws IOException {
         SynalogikService synalogikService = new SynalogikService(fileReader, stringAnalyser);
@@ -68,5 +75,39 @@ class SynalogikServiceTest {
         long endTime = System.nanoTime();
         long totalTime = endTime - startTime;
         System.out.println("Time to read bible and return response was : " + totalTime / 1000000 + "ms");
+    }
+
+    @Test
+    public void getMostFrequentOccurringWordAndTheirLengths_TwoWordsOfMaxLength_ReturnsStringWithAmpersand() {
+        SynalogikService synalogikService = new SynalogikService(fileReader, stringAnalyser);
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(1, 5);
+        map.put(2, 5);
+        String mostFrequentOccurringWordAndTheirLengths = synalogikService.getMostFrequentOccurringWordAndTheirLengths(map);
+        assert mostFrequentOccurringWordAndTheirLengths.equals("The most frequently occurring word length is 5, for word lengths of 1 & 2");
+    }
+
+    @Test
+    public void getMostFrequentOccurringWordAndTheirLengths_SizWordsOfMaxLength_ReturnsStringWithAmpersand() {
+        SynalogikService synalogikService = new SynalogikService(fileReader, stringAnalyser);
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(1, 5);
+        map.put(2, 5);
+        map.put(3, 5);
+        map.put(4, 5);
+        map.put(5, 5);
+        map.put(6, 5);
+        String mostFrequentOccurringWordAndTheirLengths = synalogikService.getMostFrequentOccurringWordAndTheirLengths(map);
+        assert mostFrequentOccurringWordAndTheirLengths.equals("The most frequently occurring word length is 5, for word lengths of 1 & 2 & 3 & 4 & 5 & 6");
+    }
+
+    @Test
+    public void getMostFrequentOccurringWordAndTheirLengths_SingleWordOfMaxLength_ReturnsStringSingular() {
+        SynalogikService synalogikService = new SynalogikService(fileReader, stringAnalyser);
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(1, 5);
+        map.put(2, 6);
+        String mostFrequentOccurringWordAndTheirLengths = synalogikService.getMostFrequentOccurringWordAndTheirLengths(map);
+        assert mostFrequentOccurringWordAndTheirLengths.equals("The most frequently occurring word length is 6, for word length 2");
     }
 }

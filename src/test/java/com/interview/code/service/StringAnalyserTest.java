@@ -20,4 +20,22 @@ class StringAnalyserTest {
         assert map.get(7) == 1;
         assert map.get(10) == 1;
     }
+
+    @Test
+    public void getMap_formattedDate_returnsHashMapForLine() {
+        HashMap<Integer, Integer> map = stringAnalyser.getMap("18/05/2016");
+        assert map.get(10) == 1;
+    }
+
+    @Test
+    public void getMap_formattedNumber_returnsHashMapForLine() {
+        HashMap<Integer, Integer> map = stringAnalyser.getMap("1.654");
+        assert map.get(4) == 1;
+    }
+
+    @Test
+    public void getMap_formattedNumberNoDecimal_returnsHashMapForLine() {
+        HashMap<Integer, Integer> map = stringAnalyser.getMap("1,250,420");
+        assert map.get(7) == 1;
+    }
 }

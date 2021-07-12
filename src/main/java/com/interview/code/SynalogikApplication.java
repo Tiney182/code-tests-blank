@@ -7,11 +7,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.io.IOException;
+
 @SpringBootApplication
-public class CodeApplication {
+public class SynalogikApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CodeApplication.class, args);
+        SpringApplication.run(SynalogikApplication.class, args);
     }
 
     @Bean

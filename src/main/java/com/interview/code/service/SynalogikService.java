@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class SynalogikService {
         this.stringAnalyser = stringAnalyser;
     }
 
-    SynalogikResponse buildResponseForResource(Resource resource) throws IOException {
+    public SynalogikResponse buildResponseForResource(Resource resource) throws IOException {
         List<String> fileContents = fileReader.getFileContents(resource);
         HashMap<Integer, Integer> map = new HashMap<>();
         fileContents.stream()
@@ -60,5 +61,31 @@ public class SynalogikService {
         BigDecimal wordCountBD = BigDecimal.valueOf(getWordCount(map));
         BigDecimal totalWordLengthBD = BigDecimal.valueOf(totalWordLength);
         return totalWordLengthBD.divide(wordCountBD, 3, RoundingMode.HALF_UP);
+    }
+
+    public String getMostFrequentOccurringWordAndTheirLengths(HashMap<Integer, Integer> map) {
+        int maxValueInMap = (Collections.max(map.values()));
+        int amountOfMaxValues = 0;
+        StringBuilder standardText = new StringBuilder();
+        StringBuilder variation = new StringBuilder();
+        standardText.append("The most frequently occurring word length is ");
+        standardText.append(maxValueInMap);
+        standardText.append(", for word ");
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue() == maxValueInMap) {
+                amountOfMaxValues++;
+                if (amountOfMaxValues > 1) {
+                    variation.append(" & ");
+                }
+                variation.append(entry.getKey());
+            }
+        }
+        if (amountOfMaxValues > 1) {
+            standardText.append("lengths of ");
+        } else {
+            standardText.append("length ");
+        }
+        standardText.append(variation);
+        return standardText.toString();
     }
 }
